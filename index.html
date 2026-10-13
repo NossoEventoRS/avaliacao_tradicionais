@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>Avaliação – Danças Tradicionais</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#93d688;
+margin:0;
+padding:0;
+color:#030303;
+overflow-x:hidden;
+}
+
+.container{
+max-width:1400px;
+width:98%;
+margin:10px auto;
+background:#93d688;
+border:1px solid #93d688;
+display:none;
+}
+
+.header{
+background:#fff;
+border-bottom:3px solid #4a7a41;
+padding:10px;
+overflow:hidden;
+}
+
+.header img{
+max-width:100%;
+height:auto;
+display:block;
+}
+
+#telaLogin{
+max-width:400px;
+width:90%;
+margin:80px auto;
+background:#fff;
+padding:20px;
+border:2px solid #3d6b35;
+text-align:center;
+border-radius:8px;
+}
+
+#telaLogin img{max-width:100%;height:auto}
+
+#telaLogin input{
+width:90%;
+padding:10px;
+margin:10px 0;
+border:1px solid #6a9161;
+border-radius:4px;
+font-size:16px;
+}
+
+#telaLogin button{
+background:#5f9553;
+color:#fff;
+border:none;
+border-radius:6px;
+padding:10px 40px;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+#telaLogin button:hover{
+background:#4a7a41;
+transform:translateY(-2px);
+box-shadow:0 4px 10px rgba(74,122,65,0.35);
+}
+
+#telaLogin button:active{
+transform:translateY(0);
+box-shadow:none;
+}
+
+.selecao{
+display:grid;
+grid-template-columns:1fr 1.4fr 1fr;
+gap:8px;
+padding:8px;
+background:#fff;
+border-bottom:1px solid #cfd9cb;
+}
+
+.linha{
+display:grid;
+grid-template-columns:repeat(5, 1fr);
+gap:5px;
+padding:8px;
+background:#fff;
+border-bottom:1px solid #cfd9cb;
+color:#333333;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2, 1fr);
+gap:8px;
+padding:6px;
+}
+
+.box{
+border:1px solid #cfd9cb;
+background:#fff;
+padding:8px;
+font-size:13px;
+border-radius:4px;
+}
+
+.box h3{
+text-align:center;
+margin:0 0 8px;
+padding-bottom:6px;
+color:#345c2c;
+border-bottom:2px solid #4a7a41;
+}
+
+.box h3.sub{
+border-bottom:none;
+margin-top:-6px;
+font-size:12px;
+font-weight:normal;
+color:#5a5a5a;
+}
+
+textarea{
+width:100%;
+height:90px;
+border:1px solid #6a9161;
+border-radius:4px;
+font-family:inherit;
+padding:4px;
+resize:vertical;
+line-height:1.4;
+}
+
+.notaFinal{
+font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#345c2c;
+}
+
+.notaFinal small{
+display:block;
+font-size:12px;
+font-weight:normal;
+color:#5a5a5a;
+}
+
+select,input{
+width:100%;
+border:1px solid #6a9161;
+border-radius:4px;
+padding:6px;
+font-family:inherit;
+}
+
+.linha-nota{
+display:flex;
+align-items:center;
+gap:6px;
+margin-bottom:6px;
+flex-wrap:wrap;
+}
+
+.linha-nota .texto{
+flex:1 1 220px;
+}
+
+.linha-nota .n{
+font-weight:bold;
+color:#345c2c;
+}
+
+.linha-nota .pontilhado{
+flex:1;
+min-width:20px;
+border-bottom:1px dotted #b8c3b3;
+}
+
+.input-nota{
+width:60px;
+text-align:center;
+}
+
+.resumo-direita{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+margin-top:6px;
+border-top:1px solid #cfd9cb;
+padding-top:4px;
+color:#345c2c;
+}
+
+.grid-inferior{
+display:grid;
+grid-template-columns:1.6fr 2.4fr 0.8fr;
+gap:6px;
+padding:6px;
+}
+
+.grid-rodape{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:6px;
+padding:6px;
+}
+
+.btns{
+display:flex;
+justify-content:center;
+padding:15px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+button{
+padding:12px 30px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+border-radius:6px;
+transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-salvar,
+.btn-logout{
+min-width:180px;
+text-align:center;
+background:#4a7a41;
+color:#fff;
+border:1px solid #3d6b35;
+}
+
+.btn-salvar:hover{
+background:#3d6b35;
+transform:translateY(-2px);
+box-shadow:0 4px 12px rgba(61,107,53,0.4);
+}
+
+.btn-logout{
+background:#d9463b;
+color:#fff;
+border:1px solid #b5352b;
+}
+
+.btn-logout:hover{
+background:#b5352b;
+transform:translateY(-2px);
+box-shadow:0 4px 12px rgba(181,53,43,0.4);
+}
+
+.btn-salvar:active,
+.btn-logout:active{
+transform:translateY(0);
+box-shadow:none;
+}
+
+.overlay-loading{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.overlay-loading.ativo{
+display:flex;
+}
+
+.overlay-caixa{
+background:#fff;
+padding:30px 40px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+
+.overlay-spinner{
+width:48px;
+height:48px;
+border:5px solid #cfd9cb;
+border-top:5px solid #4a7a41;
+border-radius:50%;
+margin:0 auto 15px;
+animation:girar 0.8s linear infinite;
+}
+
+.overlay-texto{
+font-weight:bold;
+color:#345c2c;
+font-size:15px;
+}
+
+@keyframes girar{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+footer{
+text-align:center;
+margin-top:20px;
+font-size:12px;
+color:#030303;
+padding-bottom:20px;
+}
+
+/* ===== Menu inicial ===== */
+#telaMenu{
+display:none;
+max-width:560px;
+width:92%;
+margin:40px auto;
+background:#fff;
+padding:20px;
+border:2px solid #3d6b35;
+border-radius:8px;
+text-align:center;
+}
+#telaMenu img{max-width:100%;height:auto}
+#telaMenu h2{color:#345c2c;margin:10px 0 4px}
+.menu-nome{color:#5a5a5a;margin-bottom:14px}
+.menu-btn{
+display:block;
+width:100%;
+margin:10px 0;
+padding:16px;
+font-size:17px;
+background:#4a7a41;
+color:#fff;
+border:1px solid #3d6b35;
+}
+.menu-btn:hover{background:#3d6b35}
+.menu-btn small{display:block;font-weight:normal;font-size:12px;margin-top:2px}
+.menu-btn.off{background:#e3e8e0;color:#6b6b6b;border-color:#b8c3b3;cursor:not-allowed;transform:none;box-shadow:none}
+.menu-btn.off:hover{background:#e3e8e0}
+.btn-menu{
+min-width:140px;
+background:#fff;
+color:#345c2c;
+border:1px solid #4a7a41;
+}
+.btn-menu:hover{background:#eef4ec}
+
+/* ===== Planilha de Correção ===== */
+.c-quesito{border-top:1px solid #cfd9cb;padding:8px 0}
+.c-quesito:first-of-type{border-top:none}
+.c-texto{margin-bottom:6px;line-height:1.5}
+.c-texto .n{font-weight:bold;color:#345c2c;margin-right:4px}
+.c-texto input[type=checkbox]{width:auto;margin:0 3px 0 6px;vertical-align:middle;padding:0}
+.pills{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.grp{display:flex;gap:4px;align-items:center;padding:3px 5px;border-radius:8px}
+.grp small{font-size:10px;font-weight:bold;color:#333;margin-right:2px}
+.grp-z{background:#e6ecf2}
+.grp-s{background:#e3f1df}
+.grp-p{background:#fff4cc}
+.grp-g{background:#ffe0b8}
+.grp-mg{background:#f8cfcb}
+.pill{
+width:auto;
+min-width:48px;
+padding:6px 8px;
+font-size:13px;
+font-weight:bold;
+border:1px solid #6a9161;
+background:#fff;
+color:#1d232b;
+border-radius:14px;
+}
+.pill:hover{background:#eef4ec}
+.pill.sel{background:#345c2c;color:#fff;border-color:#345c2c}
+.outros-linha{border-top:1px dashed #b8c3b3;padding:8px 0}
+.outros-linha input[type=text]{margin-bottom:6px}
+.btn-add{
+width:auto;
+padding:7px 14px;
+font-size:13px;
+background:#fff;
+color:#345c2c;
+border:1px dashed #4a7a41;
+margin-top:6px;
+}
+.btn-add:disabled{opacity:.5;cursor:not-allowed}
+.resumo-wrap{overflow-x:auto}
+table.resumo{border-collapse:collapse;width:100%;font-size:12px;text-align:center}
+table.resumo th,table.resumo td{border:1px solid #cfd9cb;padding:4px 6px;white-space:nowrap}
+table.resumo th{background:#e6ecf2}
+table.resumo td.rot{text-align:left;font-weight:bold;background:#f0f3f6}
+.c-nota{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.c-nota .box{text-align:center;font-weight:bold;font-size:18px;color:#345c2c}
+.c-nota .box small{display:block;font-weight:normal;font-size:12px;color:#5a5a5a}
+.c-nota .box span{display:block;margin-top:2px}
+
+/* ===== Danças já avaliadas / diálogos ===== */
+.avaliadas{
+padding:6px 8px;
+background:#fff;
+border-bottom:1px solid #cfd9cb;
+font-size:13px;
+color:#333;
+}
+.chip{
+display:inline-block;
+margin:2px 6px 2px 0;
+padding:3px 10px;
+border-radius:12px;
+background:#fde8e6;
+color:#b5352b;
+border:1px solid #e3a39d;
+font-weight:bold;
+font-size:12px;
+}
+.avaliadas .nenhuma{color:#5a5a5a}
+select option.ja-avaliada{color:#c0392b;font-weight:bold}
+select.tem-avaliada{border-color:#c0392b}
+.dlg-titulo{font-weight:bold;font-size:17px;color:#345c2c;margin-bottom:10px}
+.dlg-texto{white-space:pre-line;text-align:left;margin-bottom:16px;line-height:1.4}
+.dlg-botoes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ===== Responsividade ===== */
+@media (max-width: 800px){
+.selecao{
+grid-template-columns:1fr;
+}
+.grid{
+grid-template-columns:1fr;
+}
+.grid-inferior{
+grid-template-columns:1fr;
+}
+.grid-rodape{
+grid-template-columns:1fr;
+}
+}
+
+@media (max-width: 600px){
+.linha{
+grid-template-columns:1fr 1fr;
+}
+.header{
+grid-template-columns:1fr!important;
+text-align:center;
+}
+.header img{
+margin:0 auto 5px;
+display:block;
+}
+.btns{
+flex-direction:column;
+align-items:stretch;
+}
+button{
+width:100%;
+}
+}
+</style>
+</head>
+<body>
+
+<div id="telaLogin">
+    <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="100">
+    <h2>Acesso Avaliador<br>| DANÇAS TRADICIONAIS |</h2>
+    <input type="text" id="userLogin" placeholder="Usuário (Ex: AV1)">
+    <input type="password" id="passLogin" placeholder="Senha">
+    <button onclick="fazerLogin()" id="btnLogin">ENTRAR</button>
+</div>
+
+<div id="appContainer" class="container">
+    <div class="header" style="display:grid;grid-template-columns:100px 1fr 100px;align-items:center">
+        <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="70">
+        <div style="text-align:center">
+            <strong>MTG – MOVIMENTO TRADICIONALISTA GAÚCHO</strong><br>
+            Nosso Evento RS<br>
+            Seu evento Nossa Missão<br>
+            <strong>Planilha de Avaliação – Danças Tradicionais</strong>
+        </div>
+        <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="70">
+    </div>
+
+    <div class="selecao">
+        <select id="codCandidato">
+            <option value="">Selecione CÓDIGO do candidato *</option>
+        </select>
+        <select id="danca">
+            <option value="">Selecione a DANÇA avaliada *</option>
+            <option value="Anú">Anú</option>
+            <option value="Balaio">Balaio</option>
+            <option value="Cana Verde">Cana Verde</option>
+            <option value="Caranguejo">Caranguejo</option>
+            <option value="Chico Sapateado">Chico Sapateado</option>
+            <option value="Chimarrita">Chimarrita</option>
+            <option value="Chimarrita Balão">Chimarrita Balão</option>
+            <option value="Chote de Carreirinho">Chote de Carreirinho</option>
+            <option value="Chote de Duas Damas">Chote de Duas Damas</option>
+            <option value="Chote de “Quatro Passi”">Chote de “Quatro Passi”</option>
+            <option value="Chote de Sete Voltas">Chote de Sete Voltas</option>
+            <option value="Chote Inglês">Chote Inglês</option>
+            <option value="Havaneira Marcada">Havaneira Marcada</option>
+            <option value="Maçanico">Maçanico</option>
+            <option value="Meia Canha">Meia Canha</option>
+            <option value="Pau de Fitas">Pau de Fitas</option>
+            <option value="Pezinho">Pezinho</option>
+            <option value="Queromana">Queromana</option>
+            <option value="Rancheira de Carreirinha">Rancheira de Carreirinha</option>
+            <option value="Rilo">Rilo</option>
+            <option value="Roseira">Roseira</option>
+            <option value="Sarrabalho">Sarrabalho</option>
+            <option value="Tatu &quot;Castanholas&quot;">Tatu &quot;Castanholas&quot;</option>
+            <option value="Tatu com Volta no Meio">Tatu com Volta no Meio</option>
+            <option value="Tirana do Lenço">Tirana do Lenço</option>
+            <option value="Tirana do Ombro">Tirana do Ombro</option>
+            <option value="Valsa da Mão Trocada">Valsa da Mão Trocada</option>
+            <option value="Vaneirão Sapateado">Vaneirão Sapateado</option>
+        </select>
+        <select id="ordem">
+            <option value="">Selecione a ORDEM da dança *</option>
+            <option value="1">D1 – 1ª dança</option>
+            <option value="2">D2 – 2ª dança</option>
+            <option value="3">D3 – 3ª dança</option>
+        </select>
+    </div>
+
+    <div class="linha">
+        <div>Categoria:<br><b id="categoria"></b></div>
+        <div>Concorrente:<br><b id="concorrente"></b></div>
+        <div>Entidade:<br><b id="entidade"></b></div>
+        <div>Município:<br><b id="municipio"></b></div>
+        <div>RT:<br><b id="rt"></b></div>
+    </div>
+    <div class="avaliadas" id="avaliadasInterp" style="display:none"></div>
+
+    <div class="grid">
+        <div class="box">
+            <h3>Parte A – Interpretação Artística (4,000)</h3>
+            <h3 class="sub">(Quesitos 1 a 3 · soma dos itens)</h3>
+            <div class="linha-nota"><span class="texto"><span class="n">1</span> Características do(s) ciclo(s)</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="A" inputmode="decimal" aria-label="Nota do quesito 1"></div>
+            <div class="linha-nota"><span class="texto"><span class="n">2</span> Características e/ou peculiaridades da dança</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="A" inputmode="decimal" aria-label="Nota do quesito 2"></div>
+            <div class="linha-nota"><span class="texto"><span class="n">3</span> Desenvolvimento artístico da dança (características de indumentária, relação entre música e execução dos movimentos, etc.)</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="A" inputmode="decimal" aria-label="Nota do quesito 3"></div>
+            <div class="resumo-direita"><span>A – Soma parcial dos itens</span><b id="somaA">—</b></div>
+        </div>
+
+        <div class="box">
+            <h3>Parte B – Interpretação Artística (4,000)</h3>
+            <h3 class="sub">(Quesitos 4 a 9 · média dos itens)</h3>
+            <div class="linha-nota"><span class="texto"><span class="n">4</span> Comportamento – peões (ação/reação, interação, teatralidade, respeito à prenda, etc.)</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="B" inputmode="decimal" aria-label="Nota do quesito 4"></div>
+            <div class="linha-nota"><span class="texto"><span class="n">5</span> Comportamento – prendas (ação/reação, interação, recato, delicadeza, graciosidade, etc.)</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="B" inputmode="decimal" aria-label="Nota do quesito 5"></div>
+            <div class="linha-nota"><span class="texto"><span class="n">6</span> Expressões faciais – peões (naturalidade, espontaneidade, etc.)</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="B" inputmode="decimal" aria-label="Nota do quesito 6"></div>
+            <div class="linha-nota"><span class="texto"><span class="n">7</span> Expressões faciais – prendas (naturalidade, espontaneidade, etc.)</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="B" inputmode="decimal" aria-label="Nota do quesito 7"></div>
+            <div class="linha-nota"><span class="texto"><span class="n">8</span> Expressão corporal e gestual – peões (passos, sapateios, gestos, floreios, etc.)</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="B" inputmode="decimal" aria-label="Nota do quesito 8"></div>
+            <div class="linha-nota"><span class="texto"><span class="n">9</span> Expressão corporal e gestual – prendas (passos, sarandeios, gestos, floreios, etc.)</span><span class="pontilhado"></span><input class="input-nota" data-max="4" data-grupo="B" inputmode="decimal" aria-label="Nota do quesito 9"></div>
+            <div class="resumo-direita"><span>Soma parcial dos itens</span><b id="somaB">—</b></div>
+            <div class="resumo-direita" style="border-top:none;margin-top:0"><span>B – Média parcial (soma ÷ 6)</span><b id="mediaB">—</b></div>
+        </div>
+    </div>
+
+    <div class="grid-inferior">
+        <div class="box">
+            <b>Descontos:</b><br>
+            <div class="linha-nota"><span class="texto">Tradicionalidade – C (até 1,000): </span><span class="pontilhado"></span><input id="descTrad" class="input-nota" data-max="1" inputmode="decimal" aria-label="Desconto de tradicionalidade"></div>
+            <div class="resumo-direita"><span>Soma das parciais (A + B)</span><b id="somaAB">—</b></div>
+        </div>
+        <div class="box">
+            <b>Parecer descritivo obrigatório relativo às figuras da dança:</b>
+            <textarea id="parecer" placeholder="Parecer descritivo"></textarea>
+        </div>
+        <div class="box notaFinal">Nota Final<small>(A + B) ÷ 4 − C</small><span id="notaFinal">—</span></div>
+    </div>
+
+    <div class="grid-rodape">
+        <div class="box">Data/Hora: <span id="data"></span></div>
+        <div class="box">Avaliador: <b id="nomeExibicao"></b></div>
+    </div>
+
+    <div class="btns">
+        <button onclick="voltarMenu()" class="btn-menu">Menu</button>
+        <button onclick="logout()" class="btn-logout">Sair</button>
+        <button onclick="salvar()" class="btn-salvar">SALVAR AVALIAÇÃO</button>
+    </div>
+</div>
+
+<div id="telaMenu">
+    <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="100">
+    <h2>| DANÇAS TRADICIONAIS |</h2>
+    <div class="menu-nome">Avaliador: <b id="menuNome"></b></div>
+    <button class="menu-btn" onclick="abrirInterpretacao()">INTERPRETAÇÃO<small>Interpretação artística</small></button>
+    <button class="menu-btn" onclick="abrirCorrecao()">CORREÇÃO<small>Correção coreográfica (planilha da dança)</small></button>
+    <button class="menu-btn" onclick="abrirHarmonia()">HARMONIA<small>Harmonia de conjunto (planilha da dança)</small></button>
+    <div class="btns"><button onclick="logout()" class="btn-logout">Sair</button></div>
+</div>
+
+<div id="viewCorrecao" class="container">
+    <div class="header" style="display:grid;grid-template-columns:100px 1fr 100px;align-items:center">
+        <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="70">
+        <div style="text-align:center">
+            <strong>MTG – MOVIMENTO TRADICIONALISTA GAÚCHO</strong><br>
+            Nosso Evento RS<br>
+            Seu evento Nossa Missão<br>
+            <strong>Planilha de Avaliação – Danças Tradicionais</strong><br>
+            <strong>CORREÇÃO COREOGRÁFICA</strong>
+        </div>
+        <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="70">
+    </div>
+
+    <div class="selecao">
+        <select id="c_cod"><option value="">Selecione CÓDIGO do candidato *</option></select>
+        <select id="c_danca"><option value="">Selecione a DANÇA avaliada *</option></select>
+        <select id="c_ordem">
+            <option value="">Selecione a ORDEM da dança *</option>
+            <option value="1">1ª dança</option>
+            <option value="2">2ª dança</option>
+            <option value="3">3ª dança</option>
+        </select>
+    </div>
+
+    <div class="linha">
+        <div>Categoria:<br><b id="c_categoria"></b></div>
+        <div>Concorrente:<br><b id="c_concorrente"></b></div>
+        <div>Entidade:<br><b id="c_entidade"></b></div>
+        <div>Município:<br><b id="c_municipio"></b></div>
+        <div>RT:<br><b id="c_rt"></b></div>
+    </div>
+    <div class="avaliadas" id="avaliadasCorr" style="display:none"></div>
+
+    <div id="c_planilha" style="padding:6px">
+        <div class="box" style="text-align:center;color:#5a5a5a">Selecione a dança para abrir a planilha de correção.</div>
+    </div>
+
+    <div class="grid-rodape">
+        <div class="box">Data/Hora: <span id="c_data"></span></div>
+        <div class="box">Avaliador: <b id="c_nome"></b></div>
+    </div>
+
+    <div class="btns">
+        <button onclick="voltarMenu()" class="btn-menu">Menu</button>
+        <button onclick="logout()" class="btn-logout">Sair</button>
+        <button onclick="salvarCorrecao()" class="btn-salvar" id="c_btnSalvar">SALVAR AVALIAÇÃO</button>
+    </div>
+</div>
+
+<div id="viewHarmonia" class="container">
+    <div class="header" style="display:grid;grid-template-columns:100px 1fr 100px;align-items:center">
+        <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="70">
+        <div style="text-align:center">
+            <strong>MTG – MOVIMENTO TRADICIONALISTA GAÚCHO</strong><br>
+            Nosso Evento RS<br>
+            Seu evento Nossa Missão<br>
+            <strong>Planilha de Avaliação – Danças Tradicionais</strong><br>
+            <strong>HARMONIA DE CONJUNTO</strong>
+        </div>
+        <img src="https://raw.githubusercontent.com/NossoEventoRS/Imagens/refs/heads/main/Logo.png" height="70">
+    </div>
+
+    <div class="selecao">
+        <select id="h_cod"><option value="">Selecione CÓDIGO do candidato *</option></select>
+        <select id="h_danca"><option value="">Selecione a DANÇA avaliada *</option></select>
+        <select id="h_ordem">
+            <option value="">Selecione a ORDEM da dança *</option>
+            <option value="1">1ª dança</option>
+            <option value="2">2ª dança</option>
+            <option value="3">3ª dança</option>
+        </select>
+    </div>
+
+    <div class="linha">
+        <div>Categoria:<br><b id="h_categoria"></b></div>
+        <div>Concorrente:<br><b id="h_concorrente"></b></div>
+        <div>Entidade:<br><b id="h_entidade"></b></div>
+        <div>Município:<br><b id="h_municipio"></b></div>
+        <div>RT:<br><b id="h_rt"></b></div>
+    </div>
+    <div class="avaliadas" id="avaliadasHarm" style="display:none"></div>
+
+    <div id="h_planilha" style="padding:6px">
+        <div class="box" style="text-align:center;color:#5a5a5a">Selecione a dança para abrir a planilha de harmonia.</div>
+    </div>
+
+    <div class="grid-rodape">
+        <div class="box">Data/Hora: <span id="h_data"></span></div>
+        <div class="box">Avaliador: <b id="h_nome"></b></div>
+    </div>
+
+    <div class="btns">
+        <button onclick="voltarMenu()" class="btn-menu">Menu</button>
+        <button onclick="logout()" class="btn-logout">Sair</button>
+        <button onclick="salvarHarmonia()" class="btn-salvar" id="h_btnSalvar">SALVAR AVALIAÇÃO</button>
+    </div>
+</div>
+
+<div id="modalDlg" class="overlay-loading" style="z-index:10000">
+    <div class="overlay-caixa" style="max-width:440px;width:92%">
+        <div id="dlgTitulo" class="dlg-titulo"></div>
+        <div id="dlgTexto" class="dlg-texto"></div>
+        <div id="dlgBotoes" class="dlg-botoes"></div>
+    </div>
+</div>
+
+<div id="overlayLoading" class="overlay-loading">
+<div class="overlay-caixa">
+<div class="overlay-spinner"></div>
+<div class="overlay-texto">Aguarde, finalizando envio...</div>
+</div>
+</div>
+
+<footer>
+  Sistema de Avaliação - Produzido por NossoEventoRS © - Conforme Regulamento Artístico do MTG (2026)
+</footer>
+
+<script>
+// Endereço do Apps Script das Danças Tradicionais (cole aqui a URL "/exec" da implantação).
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbyduvO2MPnL11DNfdBqp2kI6VhRaTk8Plolyb8RVqDUYQPAggXHbo0jlEr6TwN3D0dOew/exec";
+const CHAVE_SESSAO = "avaliadorDancas";
+
+const MAX_ITEM = 4;
+const MAX_TRAD = 1;
+
+window.onload = () => {
+    document.querySelectorAll(".input-nota").forEach(campo => {
+        campo.setAttribute("maxlength", "5");
+        campo.addEventListener("input", () => limitarNota(campo));
+        campo.addEventListener("blur", () => formatarNota(campo));
+    });
+    calc();
+
+    const userLogado = localStorage.getItem(CHAVE_SESSAO);
+    if (userLogado) {
+        try { exibirSistema(JSON.parse(userLogado)); }
+        catch (e) { localStorage.removeItem(CHAVE_SESSAO); }
+    }
+};
+
+function fazerLogin() {
+    const u = document.getElementById("userLogin").value.trim();
+    const p = document.getElementById("passLogin").value;
+    const btn = document.getElementById("btnLogin");
+    if (!u || !p) { alert("Preencha tudo!"); return; }
+    if (!URL_SCRIPT) { alert("O endereço do Apps Script ainda não foi configurado no sistema."); return; }
+    btn.disabled = true; btn.innerText = "VERIFICANDO...";
+    fetch(`${URL_SCRIPT}?acao=login&user=${encodeURIComponent(u)}&pass=${encodeURIComponent(p)}`)
+    .then(r => r.json()).then(res => {
+        if (res.status === "OK") {
+            localStorage.setItem(CHAVE_SESSAO, JSON.stringify(res));
+            exibirSistema(res);
+        } else {
+            alert(res.msg); btn.disabled = false; btn.innerText = "ENTRAR";
+        }
+    }).catch(() => { alert("Erro de conexão"); btn.disabled = false; btn.innerText = "ENTRAR"; });
+}
+
+const TELAS = ["telaLogin", "telaMenu", "appContainer", "viewCorrecao", "viewHarmonia"];
+function mostrarTela(id) {
+    TELAS.forEach(t => { document.getElementById(t).style.display = (t === id) ? "block" : "none"; });
+    window.scrollTo(0, 0);
+}
+
+function exibirSistema(dados) {
+    const nome = dados.nome || "Avaliador";
+    ["menuNome", "nomeExibicao", "c_nome", "h_nome"].forEach(id => { document.getElementById(id).innerText = nome; });
+    carregarCandidatos();
+    mostrarTela("telaMenu");
+}
+
+function voltarMenu() { mostrarTela("telaMenu"); }
+
+function abrirInterpretacao() {
+    document.getElementById("data").innerText = new Date().toLocaleString("pt-BR");
+    mostrarTela("appContainer");
+    if (typeof carregarAvaliadas === "function") carregarAvaliadas("interp");
+}
+
+function abrirCorrecao() {
+    document.getElementById("c_data").innerText = new Date().toLocaleString("pt-BR");
+    mostrarTela("viewCorrecao");
+    if (typeof carregarAvaliadas === "function") carregarAvaliadas("corr");
+}
+
+function abrirHarmonia() {
+    document.getElementById("h_data").innerText = new Date().toLocaleString("pt-BR");
+    mostrarTela("viewHarmonia");
+    if (typeof carregarAvaliadas === "function") carregarAvaliadas("harm");
+}
+
+function logout() {
+    if (confirm("Encerrar sessão?")) { localStorage.removeItem(CHAVE_SESSAO); location.reload(); }
+}
+
+function fmt(n) {
+    return n.toFixed(3).replace(".", ",");
+}
+
+function lerNumero(txt) {
+    const t = String(txt || "").trim().replace(",", ".");
+    if (t === "") return NaN;
+    return Number(t);
+}
+
+function v(campo) {
+    const n = lerNumero(campo.value);
+    return isNaN(n) ? 0 : n;
+}
+
+// Aceita ponto ou vírgula (vira vírgula), só números, até 3 casas decimais.
+function limparTexto(txt) {
+    let t = txt.replace(/\./g, ",").replace(/[^0-9,]/g, "");
+    const i = t.indexOf(",");
+    if (i !== -1) {
+        t = t.slice(0, i + 1) + t.slice(i + 1).replace(/,/g, "");
+        t = t.slice(0, i + 1) + t.slice(i + 1, i + 4);
+    }
+    const partes = t.split(",");
+    partes[0] = partes[0].slice(0, 1);
+    return partes.length > 1 ? partes[0] + "," + partes[1] : partes[0];
+}
+
+function limitarNota(campo) {
+    const max = parseFloat(campo.dataset.max);
+    let texto = limparTexto(campo.value);
+    const n = lerNumero(texto);
+
+    if (!isNaN(n) && n > max) {
+        texto = fmt(max);
+        campo.value = texto;
+        if (campo.id === "descTrad") {
+            alert("Atenção: o desconto máximo de tradicionalidade é " + fmt(max) + ".");
+        } else {
+            alert("Atenção: a nota máxima de cada quesito é " + fmt(max) + ". A nota foi ajustada para o máximo permitido.");
+        }
+        campo.focus();
+    } else if (campo.value !== texto) {
+        campo.value = texto;
+    }
+    calc();
+}
+
+function formatarNota(campo) {
+    const n = lerNumero(campo.value);
+    campo.value = isNaN(n) ? "" : fmt(Math.min(n, parseFloat(campo.dataset.max)));
+    calc();
+}
+
+function somaGrupo(grupo) {
+    let total = 0;
+    document.querySelectorAll('.input-nota[data-grupo="' + grupo + '"]').forEach(c => { total += v(c); });
+    return total;
+}
+
+function calc() {
+    const A = somaGrupo("A");
+    const B = somaGrupo("B");
+    const media = B / 6;
+    const soma = A + media;
+    const desc = v(document.getElementById("descTrad"));
+    const final = Math.max(0, soma / 4 - desc);
+
+    const vazio = ![...document.querySelectorAll(".input-nota")].some(c => c.value !== "");
+    const mostra = n => vazio ? "—" : fmt(n);
+
+    document.getElementById("somaA").innerText = mostra(A);
+    document.getElementById("somaB").innerText = mostra(B);
+    document.getElementById("mediaB").innerText = mostra(media);
+    document.getElementById("somaAB").innerText = mostra(soma);
+    document.getElementById("notaFinal").innerText = mostra(final);
+}
+
+let candidatos = [];
+function carregarCandidatos() {
+    fetch(URL_SCRIPT + "?acao=candidatos").then(r => r.json()).then(lista => {
+        candidatos = lista;
+        ["codCandidato", "c_cod", "h_cod"].forEach(id => {
+            const sel = document.getElementById(id);
+            sel.innerHTML = `<option value="">Selecione CÓDIGO *</option>`;
+            lista.forEach(c => sel.innerHTML += `<option value="${c.codigo}">${c.codigo}</option>`);
+        });
+    });
+}
+
+
+function camposVazios() {
+    return [...document.querySelectorAll(".input-nota[data-grupo]")].filter(c => c.value === "");
+}
+
+async function salvar() {
+    if (!document.getElementById("codCandidato").value) { alert("Selecione o candidato!"); return; }
+    if (!document.getElementById("danca").value) { alert("Selecione a dança avaliada!"); return; }
+    if (!document.getElementById("ordem").value) { alert("Selecione a ordem da dança (D1, D2 ou D3)!"); return; }
+    if (!(await conferirAntesDeSalvar("interp"))) return;
+
+    const parecer = document.getElementById("parecer");
+    if (parecer.value.trim() === "") {
+        alert("Atenção: o parecer descritivo é obrigatório.");
+        parecer.focus();
+        return;
+    }
+
+    // Rede de segurança: avisa sobre quesitos sem nota (mesmo sem o campo ter perdido o foco).
+    const vazios = camposVazios();
+    if (vazios.length) {
+        const nums = vazios.map(c => c.closest(".linha-nota").querySelector(".n").innerText);
+        const msg = "Certeza que os campos vazios não terão nota?\n" +
+                    (nums.length === 1 ? "Quesito sem nota: " : "Quesitos sem nota: ") + nums.join(", ");
+        if (!confirm(msg)) { vazios[0].focus(); return; }
+        vazios.forEach(c => { c.value = fmt(0); });
+        calc();
+    }
+
+    const user = JSON.parse(localStorage.getItem(CHAVE_SESSAO) || "null");
+    if (!user) { alert("Sessão expirada. Entre novamente."); location.reload(); return; }
+    if (!URL_SCRIPT) { alert("O endereço do Apps Script ainda não foi configurado no sistema."); return; }
+
+    const num = id => parseFloat(String(document.getElementById(id).innerText).replace(",", ".")) || 0;
+
+    const notas = {};
+    document.querySelectorAll(".input-nota[data-grupo]").forEach((c, i) => { notas["nota" + (i + 1)] = v(c); });
+
+    const payload = Object.assign({
+        quesito: "interpretacao",
+        usuarioLogin: user.usuario,
+        avaliadorNome: user.nome,
+        cod: document.getElementById("codCandidato").value,
+        concorrente: document.getElementById("concorrente").innerText,
+        categoria: document.getElementById("categoria").innerText,
+        entidade: document.getElementById("entidade").innerText,
+        municipio: document.getElementById("municipio").innerText,
+        rt: document.getElementById("rt").innerText,
+        danca: document.getElementById("danca").value,
+        ordem: Number(document.getElementById("ordem").value),
+        somaA: num("somaA"),
+        somaB: num("somaB"),
+        mediaB: num("mediaB"),
+        descTrad: v(document.getElementById("descTrad")),
+        somaAB: num("somaAB"),
+        parecer: parecer.value,
+        notaFinal: num("notaFinal"),
+        data: document.getElementById("data").innerText
+    }, notas);
+
+    const btn = document.querySelector(".btn-salvar");
+    btn.disabled = true; btn.innerText = "SALVANDO...";
+    document.getElementById("overlayLoading").classList.add("ativo");
+
+    enviarAvaliacao("interp", payload);
+}
+
+
+/* ===================== CORREÇÃO ===================== */
+
+// Quesitos de cada dança, lidos da planilha "Planilha_Correcão_2026.xlsx".
+// q = quesitos (t = texto, "()" = caixa de marcação; o = pesos permitidos, posições 0 a 11)
+// outros = máximo de linhas "Outros" da dança.
+const CORRECAO = {"Anú":{"q":[{"t":"Posição inicial incorreta conforme a transcrição.","o":[0,1,2,3,4,5,6]},{"t":"Primeira parte do canto incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Segunda parte do canto incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Palmas do entre canto incorreto conforme transcrição. () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"Figuras incorretas conforme transcrição - peão ()1ª ()2ª ()3ª ()4ª ()5ª ()6ª ()7ª ()8ª","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Figuras incorretas conforme transcrição - prenda ()1ª ()2ª ()3ª ()4ª () 5ª ()6ª ()7ª ()8ª","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Não foram dadas as vozes de comando das figs. () 1ª () 2ª () 3ª () 4ª () 5ª () 6ª () 7ª () 8ª (0,05 por erro)","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Não foi dada voz de comando para a repetição da dança","o":[0]},{"t":"Dança não foi realizada o número mínimo de vezes descritas.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Balaio":{"q":[{"t":"Posição inicial incorreta conforme a transcrição.","o":[0,1,2,3,4,5,6]},{"t":"Voz de comando não foi dada conforme a transcrição.","o":[0,1,2]},{"t":"1º figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2º figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"A dança não foi realizada o número mínimo de vezes descritas.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Cana Verde":{"q":[{"t":"Posição inicial incorreta conforme a transcrição.","o":[0,1,2,3,4,5,6]},{"t":"Voz de comando não foi dada conforme a transcrição.","o":[0,1,2]},{"t":"Passos de juntar e passos de recuo incorretos conforme transcrição:() peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Giro do peão com sua prenda incorreto conforme transcrição:() peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Giro do peão com a prenda da esquerda incorreto conf. transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Novo giro do peão com sua prenda incorreto conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Giro do peão com a prenda da direita incorreto conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Giro final do peão com sua prenda incorreto conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dança não foi realizada o número mínimo de vezes descrita.","o":[8]}],"outros":3},"Caranguejo":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dança não foi realizada o número mínimo de vezes descritas.","o":[8]}],"outros":3},"Chico Sapateado":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"A dança não foi realizada o número mínimo de vezes descritas.","o":[8]}],"outros":3},"Chimarrita":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura realizada de forma incorreta conforme transcrição: ()peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura realizada de forma incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"3ª figura realizada de forma incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"4º figura realizada de forma incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Chimarrita Balão":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dança não foi realizada o número mínimo de vezes descritas.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Chote de Carreirinho":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"A dança não foi realizada o número mínimo de vezes descrita.","o":[8]}],"outros":3},"Chote de Duas Damas":{"q":[{"t":"Posição Inicial","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Fig. fundamental incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"4ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"5ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dança não foi realizada conforme transcrição.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Figura final incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Chote de “Quatro Passi”":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"4ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dança não foi realizada o número mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Chote de Sete Voltas":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dança não foi realizada o número mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Chote Inglês":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dança não foi realizada o mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Havaneira Marcada":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"A dança não foi realizada o número mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Maçanico":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"A dança não foi realizada o número mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Meia Canha":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"Coreografia mais usual não foi feita por primeiro.","o":[8]},{"t":"Coreografia mais usual incorreta conforme transcrição.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Passos de polca incorretos conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"Passos de marcha incorretos conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"Saltos de polca incorretos conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"Não foi realizado o nº mínimo de pares de versos.","o":[8]},{"t":"Não foi dada a voz de comando para parar a música na coreografia mais usual","o":[0,1,2,3]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Pau de Fitas":{"q":[{"t":"Posição inicial incorreta conforme a transcrição.","o":[0,1,2,3,4,5,6]},{"t":"Passos de terol incorretos conforme transcrição:() peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"Passos de rancheira incorretos conforme transcrição:() peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"Não foi realizada pelo menos uma figura tradicional.","o":[11]},{"t":"Figura(s) incorreta(s) conforme a transcrição.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Não foram realizadas o número mínimo de figuras.","o":[11]},{"t":"Não foi dada a voz de comando para a realização da figura descrita","o":[0,1]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Pezinho":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"A dança não foi realizada o número mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Queromana":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"A dança não foi realizada o número mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Rancheira de Carreirinha":{"q":[{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"4ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"Coreografia tradicional da 2ª figura não foi realizada antes das variantes.","o":[8]},{"t":"Variantes incorretas conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"A dança não foi realizada o número mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Rilo":{"q":[{"t":"Passo básico incorreto conforme a transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme a transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,11]},{"t":"2ª figura incorreta conforme a transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,11]},{"t":"3ª figura incorreta conforme a transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"4ª figura incorreta conforme a transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,11]},{"t":"Vozes de comando não foi dada na Primeira e Terceira Figura","o":[0,1,2,3,11]},{"t":"Dança não foi realizada conforme descrição.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Roseira":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"4ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"5ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"A dança não foi realizada o número mínimo de vezes.","o":[8]},{"t":"Vozes de comando não foram dadas: () 1ª () 2ª () 3ª.","o":[0,1,2]},{"t":"Dança não foi realizada conforme a ordem descrita.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Sarrabalho":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"4ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"5ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Tatu \"Castanholas\"":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição () peão () prenda","o":[0,1,2,3,4,5,6,7,8]},{"t":"() 2ª () 3ª () 4ª () 5ª figura(s) incorreta(s) conforme transcrição - peão","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"() 2ª () 3ª () 4ª () 5ª figura(s) incorreta(s) conforme transcrição - prenda","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Tatu com Volta no Meio":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Repetição da 1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Coreografia tradicional da 1ª figura não foi realizada antes das variantes.","o":[8]},{"t":"Dança não foi realizada o número mínimo de vezes descrita.","o":[8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Tirana do Lenço":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"4ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"5ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Tirana do Ombro":{"q":[{"t":"Coreografia conforme a transcrição. () peão () prenda.","o":[0,1,2,3,4,5,6]},{"t":"Figuras incorretas conforme transcrição - aproximação () peão () prenda. 1ª () 2ª () 3ª () 4ª ()","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Figuras incorretas conforme transcrição - girassol () peão () prenda. () 5ª () 12ª () 18ª","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Figuras incorretas conforme transcrição - aproximação de ombros () peão () prenda. () 6ª () 7ª () 13ª () 19ª","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Figuras incorretas conforme transcrição - 1a lateral () peão () prenda. () 8ª () 9ª () 10ª () 11ª","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Figuras incorretas conforme transcrição - 2a lateral () peão () prenda. () 14ª () 15ª () 16ª () 17ª","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Figuras incorretas conforme transcrição - recuo () peão () prenda. () 20ª () 21ª () 22ª () 23ª","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Figura final (apoteose) - figura 24 () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":4},"Valsa da Mão Trocada":{"q":[{"t":"Prelúdio e introdução conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"4ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"5ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"6ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"7ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"8ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":3},"Vaneirão Sapateado":{"q":[{"t":"Posição inicial incorreta conforme transcrição.","o":[0,1,2,3,4,5,6]},{"t":"1ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"2ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"3ª figura incorreta conforme transcrição: () peão () prenda.","o":[0,1,2,3,4,5,6,7,8,9,10,11]},{"t":"Dançarinos realizaram movimentos não descritos","o":[0,1,2,3,4,5,6,7,8,9,10,11]}],"outros":8}};
+
+const PESOS = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1];
+const GRUPOS = [
+    { nome: "Simples",     cls: "grp-s",  idx: [0, 1, 2, 3, 4] },
+    { nome: "Parcial",     cls: "grp-p",  idx: [5, 6] },
+    { nome: "Grave",       cls: "grp-g",  idx: [7, 8] },
+    { nome: "Muito grave", cls: "grp-mg", idx: [9, 10, 11] }
+];
+const NOTA_MAX_CORRECAO = 3;
+
+function escHtml(t) {
+    return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function fmt2(n) { return n.toFixed(2).replace(".", ","); }
+
+// Botões de desconto de uma linha. permitidos = posições dos pesos; comZero = inclui "Zero erro".
+function pillsHtml(permitidos, comZero) {
+    let h = "";
+    if (comZero) h += `<span class="grp grp-z"><button type="button" class="pill" data-v="Z">Zero erro</button></span>`;
+    GRUPOS.forEach(g => {
+        const idx = g.idx.filter(i => permitidos.includes(i));
+        if (!idx.length) return;
+        h += `<span class="grp ${g.cls}"><small>${g.nome}</small>` +
+             idx.map(i => `<button type="button" class="pill" data-v="${i}">${fmt2(PESOS[i])}</button>`).join("") + `</span>`;
+    });
+    return h;
+}
+
+const TODOS_PESOS = PESOS.map((_, i) => i);
+
+function outrosLinhaHtml(n) {
+    return `<div class="outros-linha" data-outros="${n}">
+        <input type="text" class="outros-texto" maxlength="200" placeholder="Outros ${n}: descreva o erro">
+        <div class="pills">${pillsHtml(TODOS_PESOS, false)}</div>
+    </div>`;
+}
+
+function renderCorrecao(nomeDanca) {
+    const box = document.getElementById("c_planilha");
+    const def = CORRECAO[nomeDanca];
+    if (!def) {
+        box.innerHTML = `<div class="box" style="text-align:center;color:#5a5a5a">Selecione a dança para abrir a planilha de correção.</div>`;
+        return;
+    }
+
+    const quesitos = def.q.map((q, i) => {
+        const texto = escHtml(q.t).replace(/\(\)/g, `<input type="checkbox" class="chk">`);
+        return `<div class="c-quesito" data-q="${i}">
+            <div class="c-texto"><span class="n">${i + 1}</span>${texto}</div>
+            <div class="pills">${pillsHtml(q.o, true)}</div>
+        </div>`;
+    }).join("");
+
+    const cab = PESOS.map(p => `<th>${fmt2(p)}</th>`).join("");
+    const vazias = PESOS.map((_, i) => `<td data-qtd="${i}">0</td>`).join("");
+    const totais = PESOS.map((_, i) => `<td data-tot="${i}">0,000</td>`).join("");
+
+    box.innerHTML = `
+        <div class="box">
+            <h3>${escHtml(nomeDanca.toUpperCase())}</h3>
+            <h3 class="sub">Correção coreográfica – total = 3,000 pontos · marque "Zero erro" ou o desconto de cada quesito</h3>
+            ${quesitos}
+        </div>
+        <div class="box">
+            <h3>Outros</h3>
+            <div id="c_outros">${outrosLinhaHtml(1)}</div>
+            <button type="button" class="btn-add" id="c_addOutros">+ Adicionar outro item</button>
+        </div>
+        <div class="box">
+            <h3>Resumo dos descontos</h3>
+            <div class="resumo-wrap"><table class="resumo">
+                <tr><td class="rot">Peso</td>${cab}</tr>
+                <tr><td class="rot">Quantidade de itens</td>${vazias}</tr>
+                <tr><td class="rot">Total</td>${totais}</tr>
+            </table></div>
+            <div class="c-nota">
+                <div class="box">TOTAL DE DESCONTOS<span id="c_totalDesc">—</span></div>
+                <div class="box">NOTA FINAL<small>3,000 − descontos</small><span id="c_notaFinal">—</span></div>
+            </div>
+        </div>
+        <div class="box">
+            <b>Parecer descritivo obrigatório:</b>
+            <textarea id="c_parecer" placeholder="Parecer descritivo"></textarea>
+        </div>`;
+    atualizarBotaoOutros();
+    calcCorrecao();
+}
+
+function atualizarBotaoOutros() {
+    const def = CORRECAO[document.getElementById("c_danca").value];
+    const btn = document.getElementById("c_addOutros");
+    if (!def || !btn) return;
+    const atual = document.querySelectorAll("#c_outros .outros-linha").length;
+    btn.disabled = atual >= def.outros;
+    btn.style.display = def.outros > 1 ? "inline-block" : "none";
+}
+
+// Descontos marcados, em centésimos (evita erro de arredondamento): [{linha, idx}] com idx = posição do peso.
+function marcacoes() {
+    const lista = [];
+    document.querySelectorAll("#c_planilha .c-quesito, #c_planilha .outros-linha").forEach(linha => {
+        const sel = linha.querySelector(".pill.sel");
+        if (sel && sel.dataset.v !== "Z") lista.push({ linha: linha, idx: Number(sel.dataset.v) });
+    });
+    return lista;
+}
+
+function calcCorrecao() {
+    if (!document.getElementById("c_totalDesc")) return;
+    const qtd = PESOS.map(() => 0);
+    marcacoes().forEach(m => { qtd[m.idx]++; });
+    let totalCent = 0;
+    qtd.forEach((q, i) => {
+        const cent = q * Math.round(PESOS[i] * 100);
+        totalCent += cent;
+        document.querySelector(`[data-qtd="${i}"]`).innerText = q;
+        document.querySelector(`[data-tot="${i}"]`).innerText = fmt((q * Math.round(PESOS[i] * 100)) / 100);
+    });
+    const notaCent = Math.max(0, NOTA_MAX_CORRECAO * 100 - totalCent);
+    document.getElementById("c_totalDesc").innerText = fmt(totalCent / 100);
+    document.getElementById("c_notaFinal").innerText = fmt(notaCent / 100);
+}
+
+// Texto do quesito com as caixas marcadas: "(X) peão ( ) prenda"
+function textoMarcado(linha) {
+    const el = linha.querySelector(".c-texto");
+    let t = "";
+    el.childNodes.forEach(n => {
+        if (n.nodeType === 3) t += n.textContent;
+        else if (n.tagName === "INPUT") t += n.checked ? "(X)" : "( )";
+    });
+    return t.replace(/\s+/g, " ").trim();
+}
+
+document.getElementById("c_planilha").addEventListener("click", e => {
+    const pill = e.target.closest(".pill");
+    if (pill) {
+        const linha = pill.closest(".c-quesito, .outros-linha");
+        const jaSel = pill.classList.contains("sel");
+        linha.querySelectorAll(".pill.sel").forEach(p => p.classList.remove("sel"));
+        if (!jaSel) pill.classList.add("sel");   // clicar de novo no botão marcado desmarca
+        calcCorrecao();
+        return;
+    }
+    if (e.target.id === "c_addOutros") {
+        const def = CORRECAO[document.getElementById("c_danca").value];
+        const cont = document.getElementById("c_outros");
+        const n = cont.querySelectorAll(".outros-linha").length + 1;
+        if (def && n <= def.outros) cont.insertAdjacentHTML("beforeend", outrosLinhaHtml(n));
+        atualizarBotaoOutros();
+    }
+});
+
+
+
+// As danças do seletor da Correção são as mesmas da Interpretação.
+(function () {
+    ["c_danca", "h_danca"].forEach(id => {
+        const dest = document.getElementById(id);
+        document.querySelectorAll("#danca option").forEach(o => {
+            if (o.value) dest.appendChild(o.cloneNode(true));
+        });
+    });
+})();
+
+async function salvarCorrecao() {
+    const cod = document.getElementById("c_cod").value;
+    const danca = document.getElementById("c_danca").value;
+    const ordem = document.getElementById("c_ordem").value;
+    if (!cod) { alert("Selecione o candidato!"); return; }
+    if (!danca) { alert("Selecione a dança avaliada!"); return; }
+    if (!ordem) { alert("Selecione a ordem da dança (1ª, 2ª ou 3ª)!"); return; }
+    if (!(await conferirAntesDeSalvar("corr"))) return;
+
+    const user = JSON.parse(localStorage.getItem(CHAVE_SESSAO) || "null");
+    if (!user) { alert("Sessão expirada. Entre novamente."); location.reload(); return; }
+    if (!URL_SCRIPT) { alert("O endereço do Apps Script ainda não foi configurado no sistema."); return; }
+
+    const quesitos = [...document.querySelectorAll("#c_planilha .c-quesito")];
+    const semMarca = quesitos.filter(l => !l.querySelector(".pill.sel"));
+    if (semMarca.length) {
+        const nums = semMarca.map(l => Number(l.dataset.q) + 1).join(", ");
+        if (!confirm("Certeza que os quesitos sem marcação não terão desconto (zero erro)?\n" +
+                     (semMarca.length === 1 ? "Quesito sem marcação: " : "Quesitos sem marcação: ") + nums)) {
+            semMarca[0].scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+        semMarca.forEach(l => l.querySelector('.pill[data-v="Z"]').classList.add("sel"));
+    }
+
+    // Linhas "Outros": se tiver desconto, precisa de descrição; se tiver descrição, precisa de desconto.
+    const outros = [];
+    for (const l of document.querySelectorAll("#c_planilha .outros-linha")) {
+        const texto = l.querySelector(".outros-texto").value.trim();
+        const sel = l.querySelector(".pill.sel");
+        if (sel && !texto) { alert('Descreva o item marcado em "Outros ' + l.dataset.outros + '".'); l.querySelector(".outros-texto").focus(); return; }
+        if (!sel && texto) { alert('Marque o desconto do item "Outros ' + l.dataset.outros + '" ou apague a descrição.'); return; }
+        if (sel) outros.push({ texto: texto, desconto: PESOS[Number(sel.dataset.v)] });
+    }
+
+    const parecer = document.getElementById("c_parecer");
+    if (parecer.value.trim() === "") {
+        alert("Atenção: o parecer descritivo é obrigatório.");
+        parecer.focus();
+        return;
+    }
+
+    calcCorrecao();
+    const itens = quesitos.map(l => {
+        const sel = l.querySelector(".pill.sel");
+        return { n: Number(l.dataset.q) + 1, texto: textoMarcado(l), desconto: sel.dataset.v === "Z" ? 0 : PESOS[Number(sel.dataset.v)] };
+    });
+    const num = id => parseFloat(String(document.getElementById(id).innerText).replace(",", ".")) || 0;
+
+    const payload = {
+        quesito: "correcao",
+        usuarioLogin: user.usuario,
+        avaliadorNome: user.nome,
+        cod: cod,
+        concorrente: document.getElementById("c_concorrente").innerText,
+        categoria: document.getElementById("c_categoria").innerText,
+        entidade: document.getElementById("c_entidade").innerText,
+        municipio: document.getElementById("c_municipio").innerText,
+        rt: document.getElementById("c_rt").innerText,
+        danca: danca,
+        ordem: Number(ordem),
+        itens: itens,
+        outros: outros,
+        totalDescontos: num("c_totalDesc"),
+        notaFinal: num("c_notaFinal"),
+        parecer: parecer.value,
+        data: document.getElementById("c_data").innerText
+    };
+
+    const btn = document.getElementById("c_btnSalvar");
+    btn.disabled = true; btn.innerText = "SALVANDO...";
+    document.getElementById("overlayLoading").classList.add("ativo");
+
+    enviarAvaliacao("corr", payload);
+}
+
+
+/* ===================== HARMONIA ===================== */
+
+// Quesitos de cada dança, lidos da "Planilha_Harmonia_2026.xlsx" (uma aba por dança).
+// q = quesitos (t = texto, "()" = caixa de marcação; o = pesos permitidos, posições de PESOS_H;
+//     sem "o" = pesos de 0,005 a 0,30; a "Quebra Total" só aceita 2,00)
+// outros = máximo de linhas "Outros" da dança.
+const HARMONIA = {"Anú":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desarmonia nos Cumprimentos () Peões () Prendas"},{"t":"Desalinhamento () Fileiras () Colunas () no lugar () em movimento"},{"t":"Desarmonia nos passeios () Peões () Prendas"},{"t":"Bate Palmas () entre canto () Sexta Figura () Peões () Prendas"},{"t":"Sarandeio em desarmonia ()1ª fig. ()2ªfig. ()3ªfig. ()4ªfig. ()5ªfig. ()7ªfig. ()8ªfig."},{"t":"Sapateio em desarmonia ()1ª fig. ()2ªfig. ()3ªfig. ()4ªfig. ()5ªfig. ()7ªfig. ()8ªfig."},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Balaio":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desarmonia na Primeira Figura () Peões () Prendas"},{"t":"Sapateio em desarmonia"},{"t":"Sarandeio em desarmonia"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Cana Verde":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Passos de juntar e passos de recuo em desarmonia () Peões () Prendas"},{"t":"Desarmonia no giro do peão com sua prenda () 1º giro ()2º giro ()3º giro"},{"t":"Desarmonia no giro do peão com a prenda da esquerda"},{"t":"Desarmonia no giro do peão com a prenda da direita"},{"t":"Desarmonia no enlace/desenlace/trocar dos braços"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Caranguejo":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desarmonia nas marcações () Peões () Prendas"},{"t":"Desarmonia nos balancês () Peões () Prendas"},{"t":"Troca de lugar em desarmonia () Peões () Prendas"},{"t":"1/2 balancês em desarmonia () Peões () Prendas"},{"t":"Cumprimentos em desarmonia () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Chico Sapateado":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Desarmonia nos passos de polca"},{"t":"Segunda figura em desarmonia pelas prendas () Passos () Giros"},{"t":"Segunda figura em desarmonia pelos peões () Sapateios () Giros"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Chimarrita":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desalinhamento das fileiras () no lugar () em movimento"},{"t":"Desalinhamento das colunas () no lugar () em movimento"},{"t":"Marcações em desarmonia () Peões () Prendas"},{"t":"Desarmonia nos passos de polca () Peões () Prendas"},{"t":"Desarmonia nos passos de recuo"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Chimarrita Balão":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Saltos de polca em desarmonia"},{"t":"Sapateios em desarmonia"},{"t":"Sarandeios em desarmonia"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Chote de Carreirinho":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Carreirinha em desarmonia"},{"t":"Passos de chote em desarmonia () Peões () Prendas"},{"t":"Pião duplo em desarmonia"},{"t":"Marcações de passos de marcha em desarmonia"},{"t":"Valseadinha dos pares em desarmonia"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Chote de Duas Damas":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Figura fundamental do chote em desarmonia () Peões () Prendas"},{"t":"Desarmonia na realização das figuras () 1ª () 2ª () 3ª () 4ª () 5ª () S.Final"},{"t":"Erro de terno () (até 0,10 por ocorrência)"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Chote de “Quatro Passi”":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Desalinhamento das fileiras no lugar () Peões () Prendas"},{"t":"Desalinhamento das colunas em movimento () Peões () Prendas"},{"t":"Desarmonia na primeira figura (quatro passi) () Peões () Prendas"},{"t":"Passos de chote em desarmonia () Peões () Prendas"},{"t":"Valseadinha dos pares em desarmonia"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Chote de Sete Voltas":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Passos de chote em desarmonia () Peões () Prendas"},{"t":"Valseadinha dos pares em desarmonia"},{"t":"Desarmonia nas sete voltas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Chote Inglês":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Desarmonia nos cumprimentos () Peões () Prendas"},{"t":"Desalinhamento das fileiras () no lugar () em movimento"},{"t":"Desalinhamento das colunas () no lugar () em movimento"},{"t":"Passos de juntar laterais em desarmonia () Peões () Prendas"},{"t":"Passos de marcha em desarmonia () Peões () Prendas"},{"t":"Passos de chote em desarmonia () Peões () Prendas"},{"t":"Valseadinha dos pares em desarmonia"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Havaneira Marcada":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Desarmonia na Primeira Figura () Passos de recuo () ¹/4 de volta"},{"t":"Desarmonia nas carreirinhas () 1ª Figura () 2ª Figura"},{"t":"Desarmonia na Segunda Figura (passos de polca e/ou marcações)"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Maçanico":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos () Peões () Prendas"},{"t":"Desalinhamento das colunas em movimento () Peões () Prendas"},{"t":"Desalinhamento das fileiras no lugar () Peões () Prendas"},{"t":"Desarmonia na primeira figura (avanço e retorno) () Peões () Prendas"},{"t":"Desarmonia na segunda figura (giros) () Peões () Prendas"},{"t":"Desarmonia no tomar/soltar das mãos - 1ª figura () Peões () Prendas"},{"t":"Desarmonia no subir/descer dos braços - 2ª figura () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Meia Canha":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desarmonia nos passos de marcha ()Peões () Prendas"},{"t":"Desarmonia nos passos/saltos de polca () Peões () Prendas"},{"t":"Desarmonia nas evoluções"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Pau de Fitas":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desarmonia no terol sapateado () Peões () Prendas"},{"t":"Desarmonia nos passos de terol () Peões () Prendas"},{"t":"Desarmonia nos passos de rancheira () Peões () Prendas"},{"t":"Má composição da figura geométrica no mastro"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Pezinho":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Marcações pendulares em desarmonia () Peões () Prendas"},{"t":"Marcações laterais em desarmonia () Peões () Prendas"},{"t":"Alcançar/Soltar das mãos () 1ª figura () 3ª figura"},{"t":"Desarmonia nos cumprimentos ou reverências () Peões () Prendas"},{"t":"Volta inteira dos pares em desarmonia"},{"t":"Enlace/Desenlace dos pares"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":7},"Queromana":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desalinhamento das colunas () no lugar () em movimento"},{"t":"Desalinhamento das fileiras () no lugar () em movimento"},{"t":"Passeio em desarmonia () Peões () Prendas"},{"t":"Passos de polca em desarmonia () Peões () Prendas"},{"t":"Desarmonia dos cumprimentos () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Rancheira de Carreirinha":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Sapateio em desarmonia"},{"t":"Sarandeio em desarmonia"},{"t":"Desarmonia na terceira figura (rancheira)"},{"t":"Desarmonia nos passos de juntar () Peões () Prendas"},{"t":"Desarmonia nas carreirinhas () 1ª () 2ª () 3ª"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Rilo":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desarmonia nos passos fundamentais () Peões () Prendas"},{"t":"Desarmonia na figura do oito (quebrada do rilo)"},{"t":"Desarmonia no rilo singelo"},{"t":"Desarmonia no rilo dobrado"},{"t":"Alcançar/Soltar das mãos"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Roseira":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desarmonia nos passeios () Peões () Prendas"},{"t":"Desarmonia nos valseados"},{"t":"Desarmonia nos () Bate - Pés () Sapateios"},{"t":"Desarmonia nos () Giros () Sarandeios"},{"t":"Desarmonia na Quarta Figura \"roseira\" () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Sarrabalho":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Distância irregular entre os dançarinos"},{"t":"Desalinhamento das fileiras () no lugar () em movimento"},{"t":"Desarmonia na primeira figura () Peões () Prenda"},{"t":"Bate-pés em desarmonia () Peões () Prendas"},{"t":"Troca de lugares em desarmonia () Peões () Prendas"},{"t":"Subir/Descer dos braços"},{"t":"Porteira em desarmonia () Peões () Prendas"},{"t":"1/2 Volta e contra volta em desarmonia () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Tatu \"Castanholas\"":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Subir/Descer dos braços"},{"t":"Marcações das castanholas em desarmonia"},{"t":"Sapateios em desarmonia () 2ª fig. () 3ª fig. () 4ª fig. () 5ªfig."},{"t":"Sarandeios em desarmonia () 2ª fig. () 3ª fig. () 4ª fig. () 5ªfig."},{"t":"Cumprimentos em desarmonia () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Tatu com Volta no Meio":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Desarmonia nos sapateios () Primeira Figura () Variantes"},{"t":"Desarmonia nos sarandeios () Primeira Figura () Variantes"},{"t":"Desarmonia no bate pé"},{"t":"Desarmonia na volta no meio"},{"t":"Desarmonia nos cumprimentos () Peões () Prendas"},{"t":"Desarmonia nas variantes"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Tirana do Lenço":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Desarmonia na Primeira Figura \"cumprimentos\" () Peões () Prendas"},{"t":"Desarmonia na Segunda Figura \"aproximação e fuga\" () Peões () Prendas"},{"t":"Desarmonia na Terceira Figura \"atração do lenço pelo peão\" () Peões () Prendas"},{"t":"Desarmonia na Quarta Figura \"atração do lenço pela prenda\" () Peões () Prendas"},{"t":"Desarmonia na Quinta Figura \"encontro\" () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Tirana do Ombro":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Desarmonia nos avanços () Peões () Prendas"},{"t":"Desarmonia nos recuos () Peões () Prendas"},{"t":"Desarmonia nos giros em avanços () Peões () Prendas"},{"t":"Desarmonia no girassol () Peões () Prendas"},{"t":"Desarmonia no canto () Peões () Prenda"},{"t":"Desarmonia no deslocamento lateral para a esquerda () Peões () Prendas"},{"t":"Desarmonia no deslocamento lateral para a direita () Peões () Prendas"},{"t":"Desarmonia na apoteose/final () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Valsa da Mão Trocada":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Distância irregular entre os pares"},{"t":"Desarmonia no giro horário e anti-horário / valseio () Peões () Prendas"},{"t":"Desarmonia nas mãos trocadas / giro horário e anti-horário () Peões () Prendas"},{"t":"Desarmonia na valsa campeira / valseio () Peões () Prendas"},{"t":"Desarmonia na troca de pares ida e retorno / cadena () Peões () Prendas"},{"t":"Desarmonia no arremate / valseio final () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5},"Vaneirão Sapateado":{"q":[{"t":"Má disposição do grupo de dança na sala"},{"t":"Desarmonia na Primeira Figura \"vanerão\" () Peões () Prendas"},{"t":"Desarmonia na Segunda Figura \"ida do sapateio / bate pé pela direita\" () Peões () Prendas"},{"t":"Desarmonia na Terceira Figura \"retorno do sapateio / bate pé pela esquerda\" () Peões () Prendas"},{"t":"Erro de Par () (descontar 0,02 á 0,08 por erro)"},{"t":"Erro individual () Peão (descontar 0,01 á 0,05 por erro)"},{"t":"Erro individual () Prenda (descontar 0,01 á 0,05 por erro)"},{"t":"Perda de acessório ou peça () (descontar 0,005 a 0,03 por perda)"},{"t":"Quebra Parcial (até 0,30 por ocorrência)"},{"t":"Quebra Total","o":[14]}],"outros":5}};
+
+// Pesos de desconto em MILÉSIMOS de ponto (evita erro de arredondamento): 0,005 ... 0,30 e 2,00 (quebra total).
+const PESOS_H = [5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 2000];
+const PESOS_NORMAIS_H = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+const TODOS_PESOS_H = PESOS_H.map((_, i) => i);
+const GRUPOS_H = [
+    { nome: "até 0,03",     cls: "grp-s",  idx: [0, 1, 2, 3, 4] },
+    { nome: "0,04 a 0,10",  cls: "grp-p",  idx: [5, 6, 7, 8, 9, 10, 11] },
+    { nome: "0,20 e 0,30",  cls: "grp-g",  idx: [12, 13] },
+    { nome: "Quebra total", cls: "grp-mg", idx: [14] }
+];
+const NOTA_MAX_H = 2000;          // Harmonia de conjunto = 2,00 pontos
+const VAL_H = [5, 10, 15];        // valorização harmônica: de 0,005 a 0,015 por item (ganho total até 0,03)
+const VAL_ITENS = [
+    { chave: "form",   rotulo: "Formações propostas (de 0,005 a 0,015)" },
+    { chave: "desenv", rotulo: "Desenvolvimento e expectativa harmônica (de 0,005 a 0,015)" }
+];
+
+function fmtMil(mil) { return (mil / 1000).toFixed(3).replace(".", ","); }
+function fmtPesoH(mil) { return (mil / 1000).toFixed(mil % 10 === 0 ? 2 : 3).replace(".", ","); }
+
+function pillsHtmlH(permitidos, comZero) {
+    let r = "";
+    if (comZero) r += `<span class="grp grp-z"><button type="button" class="pill" data-v="Z">Zero erro</button></span>`;
+    GRUPOS_H.forEach(g => {
+        const idx = g.idx.filter(i => permitidos.includes(i));
+        if (!idx.length) return;
+        r += `<span class="grp ${g.cls}"><small>${g.nome}</small>` +
+             idx.map(i => `<button type="button" class="pill" data-v="${i}">${fmtPesoH(PESOS_H[i])}</button>`).join("") + `</span>`;
+    });
+    return r;
+}
+
+function outrosLinhaHtmlH(n) {
+    return `<div class="outros-linha" data-outros="${n}">
+        <input type="text" class="outros-texto" maxlength="200" placeholder="Outros ${n}: descreva o erro">
+        <div class="pills">${pillsHtmlH(TODOS_PESOS_H, false)}</div>
+    </div>`;
+}
+
+function valLinhaHtml(item) {
+    return `<div class="c-quesito v-linha" data-val="${item.chave}">
+        <div class="c-texto">${item.rotulo}</div>
+        <div class="pills"><span class="grp grp-z"><button type="button" class="pill" data-v="Z">Sem ganho</button></span>` +
+        `<span class="grp grp-s">${VAL_H.map(m => `<button type="button" class="pill" data-v="${m}">${fmtMil(m)}</button>`).join("")}</span></div>
+    </div>`;
+}
+
+function renderHarmonia(nomeDanca) {
+    const box = document.getElementById("h_planilha");
+    const def = HARMONIA[nomeDanca];
+    if (!def) {
+        box.innerHTML = `<div class="box" style="text-align:center;color:#5a5a5a">Selecione a dança para abrir a planilha de harmonia.</div>`;
+        return;
+    }
+
+    const quesitos = def.q.map((q, i) => {
+        const texto = escHtml(q.t).replace(/\(\)/g, `<input type="checkbox" class="chk">`);
+        return `<div class="c-quesito" data-q="${i}">
+            <div class="c-texto"><span class="n">${i + 1}</span>${texto}</div>
+            <div class="pills">${pillsHtmlH(q.o || PESOS_NORMAIS_H, true)}</div>
+        </div>`;
+    }).join("");
+
+    const cab = PESOS_H.map(p => `<th>${fmtPesoH(p)}</th>`).join("");
+    const vazias = PESOS_H.map((_, i) => `<td data-hq="${i}">0</td>`).join("");
+    const totais = PESOS_H.map((_, i) => `<td data-ht="${i}">0,000</td>`).join("");
+
+    box.innerHTML = `
+        <div class="box">
+            <h3>${escHtml(nomeDanca.toUpperCase())}</h3>
+            <h3 class="sub">Harmonia de conjunto – total = 2,000 pontos · marque "Zero erro" ou o desconto de cada quesito</h3>
+            ${quesitos}
+        </div>
+        <div class="box">
+            <h3>Outros</h3>
+            <div id="h_outros">${outrosLinhaHtmlH(1)}</div>
+            <button type="button" class="btn-add" id="h_addOutros">+ Adicionar outro item</button>
+        </div>
+        <div class="box">
+            <h3>Valorização harmônica</h3>
+            <h3 class="sub">Ganho de nota – total até 0,030 · opcional</h3>
+            ${VAL_ITENS.map(valLinhaHtml).join("")}
+        </div>
+        <div class="box">
+            <h3>Resumo dos descontos</h3>
+            <div class="resumo-wrap"><table class="resumo">
+                <tr><td class="rot">Peso</td>${cab}</tr>
+                <tr><td class="rot">Quantidade de itens</td>${vazias}</tr>
+                <tr><td class="rot">Total</td>${totais}</tr>
+            </table></div>
+            <div class="c-nota">
+                <div class="box">TOTAL DE DESCONTOS<span id="h_totalDesc">—</span></div>
+                <div class="box">NOTA APÓS DESCONTOS<small>2,000 − descontos</small><span id="h_notaApos">—</span></div>
+                <div class="box">GANHO DE NOTA<small>valorização harmônica</small><span id="h_ganho">—</span></div>
+                <div class="box">NOTA FINAL<small>nota após descontos + ganho</small><span id="h_notaFinal">—</span></div>
+            </div>
+        </div>
+        <div class="box">
+            <b>Parecer descritivo obrigatório:</b>
+            <textarea id="h_parecer" placeholder="Parecer descritivo"></textarea>
+        </div>`;
+    atualizarBotaoOutrosH();
+    calcHarmonia();
+}
+
+function atualizarBotaoOutrosH() {
+    const def = HARMONIA[document.getElementById("h_danca").value];
+    const btn = document.getElementById("h_addOutros");
+    if (!def || !btn) return;
+    const atual = document.querySelectorAll("#h_outros .outros-linha").length;
+    btn.disabled = atual >= def.outros;
+    btn.style.display = def.outros > 1 ? "inline-block" : "none";
+}
+
+// Descontos marcados: [{linha, idx}] com idx = posição do peso em PESOS_H.
+function marcacoesH() {
+    const lista = [];
+    document.querySelectorAll("#h_planilha .c-quesito:not(.v-linha), #h_planilha .outros-linha").forEach(linha => {
+        const sel = linha.querySelector(".pill.sel");
+        if (sel && sel.dataset.v !== "Z") lista.push({ linha: linha, idx: Number(sel.dataset.v) });
+    });
+    return lista;
+}
+
+// Valorização marcada, em milésimos (0 = sem ganho).
+function valH(chave) {
+    const sel = document.querySelector(`#h_planilha .v-linha[data-val="${chave}"] .pill.sel`);
+    return sel && sel.dataset.v !== "Z" ? Number(sel.dataset.v) : 0;
+}
+
+function calcHarmonia() {
+    if (!document.getElementById("h_totalDesc")) return;
+    const qtd = PESOS_H.map(() => 0);
+    marcacoesH().forEach(m => { qtd[m.idx]++; });
+    let totalMil = 0;
+    qtd.forEach((q, i) => {
+        totalMil += q * PESOS_H[i];
+        document.querySelector(`[data-hq="${i}"]`).innerText = q;
+        document.querySelector(`[data-ht="${i}"]`).innerText = fmtMil(q * PESOS_H[i]);
+    });
+    const aposMil = Math.max(0, NOTA_MAX_H - totalMil);
+    const ganhoMil = valH("form") + valH("desenv");
+    document.getElementById("h_totalDesc").innerText = fmtMil(totalMil);
+    document.getElementById("h_notaApos").innerText = fmtMil(aposMil);
+    document.getElementById("h_ganho").innerText = fmtMil(ganhoMil);
+    document.getElementById("h_notaFinal").innerText = fmtMil(aposMil + ganhoMil);
+}
+
+document.getElementById("h_planilha").addEventListener("click", e => {
+    const pill = e.target.closest(".pill");
+    if (pill) {
+        const linha = pill.closest(".c-quesito, .outros-linha");
+        const jaSel = pill.classList.contains("sel");
+        linha.querySelectorAll(".pill.sel").forEach(p => p.classList.remove("sel"));
+        if (!jaSel) pill.classList.add("sel");   // clicar de novo no botão marcado desmarca
+        calcHarmonia();
+        return;
+    }
+    if (e.target.id === "h_addOutros") {
+        const def = HARMONIA[document.getElementById("h_danca").value];
+        const cont = document.getElementById("h_outros");
+        const n = cont.querySelectorAll(".outros-linha").length + 1;
+        if (def && n <= def.outros) cont.insertAdjacentHTML("beforeend", outrosLinhaHtmlH(n));
+        atualizarBotaoOutrosH();
+    }
+});
+
+async function salvarHarmonia() {
+    const cod = document.getElementById("h_cod").value;
+    const danca = document.getElementById("h_danca").value;
+    const ordem = document.getElementById("h_ordem").value;
+    if (!cod) { alert("Selecione o candidato!"); return; }
+    if (!danca) { alert("Selecione a dança avaliada!"); return; }
+    if (!ordem) { alert("Selecione a ordem da dança (1ª, 2ª ou 3ª)!"); return; }
+    if (!(await conferirAntesDeSalvar("harm"))) return;
+
+    const user = JSON.parse(localStorage.getItem(CHAVE_SESSAO) || "null");
+    if (!user) { alert("Sessão expirada. Entre novamente."); location.reload(); return; }
+    if (!URL_SCRIPT) { alert("O endereço do Apps Script ainda não foi configurado no sistema."); return; }
+
+    const quesitos = [...document.querySelectorAll("#h_planilha .c-quesito:not(.v-linha)")];
+    const semMarca = quesitos.filter(l => !l.querySelector(".pill.sel"));
+    if (semMarca.length) {
+        const nums = semMarca.map(l => Number(l.dataset.q) + 1).join(", ");
+        if (!confirm("Certeza que os quesitos sem marcação não terão desconto (zero erro)?\n" +
+                     (semMarca.length === 1 ? "Quesito sem marcação: " : "Quesitos sem marcação: ") + nums)) {
+            semMarca[0].scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+        semMarca.forEach(l => l.querySelector('.pill[data-v="Z"]').classList.add("sel"));
+    }
+
+    // Linhas "Outros": se tiver desconto, precisa de descrição; se tiver descrição, precisa de desconto.
+    const outros = [];
+    for (const l of document.querySelectorAll("#h_planilha .outros-linha")) {
+        const texto = l.querySelector(".outros-texto").value.trim();
+        const sel = l.querySelector(".pill.sel");
+        if (sel && !texto) { alert('Descreva o item marcado em "Outros ' + l.dataset.outros + '".'); l.querySelector(".outros-texto").focus(); return; }
+        if (!sel && texto) { alert('Marque o desconto do item "Outros ' + l.dataset.outros + '" ou apague a descrição.'); return; }
+        if (sel) outros.push({ texto: texto, desconto: PESOS_H[Number(sel.dataset.v)] / 1000 });
+    }
+
+    const parecer = document.getElementById("h_parecer");
+    if (parecer.value.trim() === "") {
+        alert("Atenção: o parecer descritivo é obrigatório.");
+        parecer.focus();
+        return;
+    }
+
+    calcHarmonia();
+    const itens = quesitos.map(l => {
+        const sel = l.querySelector(".pill.sel");
+        return { n: Number(l.dataset.q) + 1, texto: textoMarcado(l), desconto: sel.dataset.v === "Z" ? 0 : PESOS_H[Number(sel.dataset.v)] / 1000 };
+    });
+    const num = id => parseFloat(String(document.getElementById(id).innerText).replace(",", ".")) || 0;
+
+    const payload = {
+        quesito: "harmonia",
+        usuarioLogin: user.usuario,
+        avaliadorNome: user.nome,
+        cod: cod,
+        concorrente: document.getElementById("h_concorrente").innerText,
+        categoria: document.getElementById("h_categoria").innerText,
+        entidade: document.getElementById("h_entidade").innerText,
+        municipio: document.getElementById("h_municipio").innerText,
+        rt: document.getElementById("h_rt").innerText,
+        danca: danca,
+        ordem: Number(ordem),
+        itens: itens,
+        outros: outros,
+        valorizacao: { formacoes: valH("form") / 1000, desenvolvimento: valH("desenv") / 1000 },
+        totalDescontos: num("h_totalDesc"),
+        notaAposDescontos: num("h_notaApos"),
+        ganhoNota: num("h_ganho"),
+        notaFinal: num("h_notaFinal"),
+        parecer: parecer.value,
+        data: document.getElementById("h_data").innerText
+    };
+
+    const btn = document.getElementById("h_btnSalvar");
+    btn.disabled = true; btn.innerText = "SALVANDO...";
+    document.getElementById("overlayLoading").classList.add("ativo");
+
+    enviarAvaliacao("harm", payload);
+}
+
+
+/* ============ DANÇAS JÁ AVALIADAS (Interpretação e Correção) ============ */
+
+const TOTAL_DANCAS = 3;
+const byId = id => document.getElementById(id);
+const norm = t => String(t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
+const VIEWS_AV = {
+    interp: { quesito: "interpretacao", cod: "codCandidato", danca: "danca", ordem: "ordem", box: "avaliadasInterp",
+              cab: { categoria: "categoria", concorrente: "concorrente", entidade: "entidade", municipio: "municipio", rt: "rt" },
+              lista: [], okDanca: null, okOrdem: null },
+    corr:   { quesito: "correcao", cod: "c_cod", danca: "c_danca", ordem: "c_ordem", box: "avaliadasCorr",
+              cab: { categoria: "c_categoria", concorrente: "c_concorrente", entidade: "c_entidade", municipio: "c_municipio", rt: "c_rt" },
+              lista: [], okDanca: null, okOrdem: null },
+    harm:   { quesito: "harmonia", cod: "h_cod", danca: "h_danca", ordem: "h_ordem", box: "avaliadasHarm",
+              cab: { categoria: "h_categoria", concorrente: "h_concorrente", entidade: "h_entidade", municipio: "h_municipio", rt: "h_rt" },
+              lista: [], okDanca: null, okOrdem: null }
+};
+
+// Guarda o texto original de cada opção para poder marcar/desmarcar "já avaliada".
+Object.values(VIEWS_AV).forEach(cfg => {
+    [cfg.danca, cfg.ordem].forEach(id => {
+        byId(id).querySelectorAll("option").forEach(o => { o.dataset.rot = o.textContent; });
+    });
+});
+
+// Caixa de diálogo com botões personalizados (Sim/Não, Continuar/Cancelar...). Devolve o valor do botão.
+function dialogo(titulo, texto, botoes) {
+    return new Promise(resolve => {
+        byId("dlgTitulo").innerText = titulo;
+        byId("dlgTexto").innerText = texto;
+        const area = byId("dlgBotoes");
+        area.innerHTML = "";
+        botoes.forEach(b => {
+            const el = document.createElement("button");
+            el.type = "button";
+            el.className = b.cls || "btn-menu";
+            el.style.minWidth = "120px";
+            el.innerText = b.rotulo;
+            el.onclick = () => { byId("modalDlg").classList.remove("ativo"); resolve(b.valor); };
+            area.appendChild(el);
+        });
+        byId("modalDlg").classList.add("ativo");
+    });
+}
+const BTN_CONTINUAR = [{ rotulo: "Continuar", valor: true, cls: "btn-salvar" }, { rotulo: "Cancelar", valor: false }];
+
+// Consulta na planilha o que este avaliador já avaliou para o candidato. Devolve true se conseguiu consultar.
+function carregarAvaliadas(chave) {
+    const cfg = VIEWS_AV[chave];
+    const cod = byId(cfg.cod).value;
+    const user = JSON.parse(localStorage.getItem(CHAVE_SESSAO) || "null");
+    if (!cod || !user || !URL_SCRIPT) { cfg.lista = []; desenharAvaliadas(chave); return Promise.resolve(true); }
+    const url = `${URL_SCRIPT}?acao=avaliadas&quesito=${cfg.quesito}&cod=${encodeURIComponent(cod)}&user=${encodeURIComponent(user.usuario)}&t=${Date.now()}`;
+    return fetch(url).then(r => r.json()).then(res => {
+        if (byId(cfg.cod).value !== cod) return true;          // o candidato mudou enquanto consultava
+        cfg.lista = Array.isArray(res) ? res : [];
+        desenharAvaliadas(chave);
+        return true;
+    }).catch(() => false);
+}
+
+function desenharAvaliadas(chave) {
+    const cfg = VIEWS_AV[chave];
+    const box = byId(cfg.box);
+    if (!byId(cfg.cod).value) {
+        box.style.display = "none";
+        box.innerHTML = "";
+    } else {
+        const ord = cfg.lista.slice().sort((a, b) => a.ordem - b.ordem);
+        box.style.display = "block";
+        box.innerHTML = `<b>Danças já avaliadas por você (${new Set(ord.map(x => x.ordem)).size} de ${TOTAL_DANCAS}):</b> ` +
+            (ord.length ? ord.map(x => `<span class="chip">✔ ${x.ordem}ª – ${escHtml(x.danca)}</span>`).join("")
+                        : `<span class="nenhuma">nenhuma ainda</span>`);
+    }
+    marcarOpcoes(chave);
+}
+
+// Destaca em vermelho, nas caixas de seleção, a dança e a ordem que já foram avaliadas.
+function marcarOpcoes(chave) {
+    const cfg = VIEWS_AV[chave];
+    byId(cfg.danca).querySelectorAll("option").forEach(o => {
+        if (!o.value) return;
+        const ja = cfg.lista.find(x => norm(x.danca) === norm(o.value));
+        o.textContent = ja ? `${o.dataset.rot} — já avaliada (${ja.ordem}ª)` : o.dataset.rot;
+        o.classList.toggle("ja-avaliada", !!ja);
+    });
+    byId(cfg.ordem).querySelectorAll("option").forEach(o => {
+        if (!o.value) return;
+        const ja = cfg.lista.find(x => Number(x.ordem) === Number(o.value));
+        o.textContent = ja ? `${o.dataset.rot} — já avaliada (${ja.danca})` : o.dataset.rot;
+        o.classList.toggle("ja-avaliada", !!ja);
+    });
+}
+
+// Aviso imediato ao escolher uma dança ou uma ordem que já foi avaliada. Devolve false se o avaliador cancelar.
+async function verificarSelecao(chave, quem) {
+    const cfg = VIEWS_AV[chave];
+    const danca = byId(cfg.danca).value;
+    const ordem = Number(byId(cfg.ordem).value) || 0;
+
+    if (quem === "danca") {
+        cfg.okDanca = null;
+        if (!danca) return true;
+        const ja = cfg.lista.find(x => norm(x.danca) === norm(danca));
+        if (!ja) return true;
+        const ok = await dialogo("Dança já avaliada",
+            `Você já avaliou "${danca}" deste candidato (${ja.ordem}ª dança).\n\nDeseja continuar mesmo assim? Ao salvar, a avaliação anterior será substituída.`, BTN_CONTINUAR);
+        if (!ok) { byId(cfg.danca).value = ""; return false; }
+        cfg.okDanca = norm(danca);
+        byId(cfg.ordem).value = String(ja.ordem);           // mantém a mesma ordem da avaliação anterior
+        cfg.okOrdem = Number(ja.ordem);
+        return true;
+    }
+
+    cfg.okOrdem = null;
+    if (!ordem) return true;
+    const ja = cfg.lista.find(x => Number(x.ordem) === ordem);
+    if (!ja || (danca && norm(ja.danca) === norm(danca))) return true;   // mesma dança: o aviso da dança já cobriu
+    const ok = await dialogo("Ordem já avaliada",
+        `A ${ordem}ª dança deste candidato já foi avaliada por você (${ja.danca}).\n\nDeseja continuar? Ao salvar, essa avaliação será substituída.`, BTN_CONTINUAR);
+    if (!ok) { byId(cfg.ordem).value = ""; return false; }
+    cfg.okOrdem = ordem;
+    return true;
+}
+
+// Última conferência antes de gravar (cobre combinações que os avisos acima não pegaram).
+async function conferirAntesDeSalvar(chave) {
+    const cfg = VIEWS_AV[chave];
+    const danca = byId(cfg.danca).value;
+    const ordem = Number(byId(cfg.ordem).value);
+    const jaDanca = cfg.lista.find(x => norm(x.danca) === norm(danca));
+    const jaOrdem = cfg.lista.find(x => Number(x.ordem) === ordem);
+
+    if (jaDanca && Number(jaDanca.ordem) !== ordem) {
+        const ok = await dialogo("Conferir ordem da dança",
+            `"${danca}" já foi avaliada por você como ${jaDanca.ordem}ª dança, mas você está salvando como ${ordem}ª.\n\nDeseja continuar?`, BTN_CONTINUAR);
+        if (!ok) return false;
+    } else if (jaDanca && cfg.okDanca !== norm(danca)) {
+        const ok = await dialogo("Dança já avaliada",
+            `Você já avaliou "${danca}" deste candidato (${jaDanca.ordem}ª dança).\n\nSalvar vai substituir a avaliação anterior. Deseja continuar?`, BTN_CONTINUAR);
+        if (!ok) return false;
+    }
+    if (jaOrdem && norm(jaOrdem.danca) !== norm(danca) && cfg.okOrdem !== ordem) {
+        const ok = await dialogo("Ordem já avaliada",
+            `A ${ordem}ª dança deste candidato já foi avaliada por você (${jaOrdem.danca}).\n\nSalvar vai substituir essa avaliação. Deseja continuar?`, BTN_CONTINUAR);
+        if (!ok) return false;
+    }
+    return true;
+}
+
+function liberarBotao(chave) {
+    const btn = chave === "interp" ? document.querySelector("#appContainer .btn-salvar") : (chave === "harm" ? byId("h_btnSalvar") : byId("c_btnSalvar"));
+    btn.disabled = false;
+    btn.innerText = "SALVAR AVALIAÇÃO";
+    byId("overlayLoading").classList.remove("ativo");
+}
+
+// Limpa só a avaliação (notas, parecer, dança e ordem) e MANTÉM o candidato e o cabeçalho.
+function limparAvaliacao(chave) {
+    const cfg = VIEWS_AV[chave];
+    byId(cfg.danca).value = "";
+    byId(cfg.ordem).value = "";
+    cfg.okDanca = null; cfg.okOrdem = null;
+    if (chave === "interp") {
+        document.querySelectorAll("#appContainer .input-nota").forEach(i => { i.value = ""; });
+        byId("parecer").value = "";
+        calc();
+        byId("data").innerText = new Date().toLocaleString("pt-BR");
+    } else if (chave === "harm") {
+        renderHarmonia("");
+        byId("h_data").innerText = new Date().toLocaleString("pt-BR");
+    } else {
+        renderCorrecao("");
+        byId("c_data").innerText = new Date().toLocaleString("pt-BR");
+    }
+    window.scrollTo(0, 0);
+}
+
+// Limpa tudo, inclusive o candidato, para começar outro.
+function limparTudo(chave) {
+    const cfg = VIEWS_AV[chave];
+    limparAvaliacao(chave);
+    byId(cfg.cod).value = "";
+    Object.values(cfg.cab).forEach(id => { byId(id).innerText = ""; });
+    cfg.lista = [];
+    desenharAvaliadas(chave);
+}
+
+function enviarAvaliacao(chave, payload) {
+    const fim = () => concluirEnvio(chave, payload);
+    fetch(URL_SCRIPT, { method: "POST", body: JSON.stringify(payload) }).then(fim).catch(fim);
+}
+
+// Depois do envio, confere na planilha se a avaliação realmente foi gravada antes de limpar a tela.
+async function concluirEnvio(chave, payload) {
+    const cfg = VIEWS_AV[chave];
+    const consultou = await carregarAvaliadas(chave);
+    liberarBotao(chave);
+    const gravou = cfg.lista.some(x => Number(x.ordem) === Number(payload.ordem) && norm(x.danca) === norm(payload.danca));
+
+    if (!consultou || !gravou) {
+        await dialogo("Não foi possível confirmar o envio",
+            consultou
+                ? "A avaliação não apareceu na planilha. Seus dados continuam na tela: toque em SALVAR AVALIAÇÃO para tentar de novo."
+                : "Não consegui consultar a planilha para confirmar o envio. Seus dados continuam na tela: confira a conexão e toque em SALVAR AVALIAÇÃO novamente.",
+            [{ rotulo: "OK", valor: true, cls: "btn-salvar" }]);
+        return;
+    }
+
+    limparAvaliacao(chave);   // o candidato e o cabeçalho continuam na tela
+    const total = new Set(cfg.lista.map(x => Number(x.ordem))).size;
+
+    if (total >= TOTAL_DANCAS) {
+        const continuar = await dialogo("Avaliação salva com sucesso!",
+            `${payload.ordem}ª dança salva. As ${TOTAL_DANCAS} danças de ${payload.concorrente || "este candidato"} já foram avaliadas.\n\nDeseja continuar avaliando outro candidato?`,
+            [{ rotulo: "Sim", valor: true, cls: "btn-salvar" }, { rotulo: "Não", valor: false }]);
+        limparTudo(chave);
+        if (!continuar) voltarMenu();
+    } else {
+        await dialogo("Avaliação salva com sucesso!",
+            `${payload.ordem}ª dança salva (${total} de ${TOTAL_DANCAS} danças avaliadas).\n\nSelecione a próxima dança de ${payload.concorrente || "este candidato"}.`,
+            [{ rotulo: "OK", valor: true, cls: "btn-salvar" }]);
+    }
+}
+
+// --- eventos ---
+function aoMudarCandidato(chave) {
+    const cfg = VIEWS_AV[chave];
+    const c = candidatos.find(x => String(x.codigo) === String(byId(cfg.cod).value));
+    Object.entries(cfg.cab).forEach(([campo, id]) => { byId(id).innerText = c ? (c[campo] || "") : ""; });
+    limparAvaliacao(chave);       // outra entidade: começa uma avaliação em branco
+    cfg.lista = [];
+    desenharAvaliadas(chave);
+    carregarAvaliadas(chave);
+}
+byId("codCandidato").onchange = () => aoMudarCandidato("interp");
+byId("c_cod").onchange = () => aoMudarCandidato("corr");
+
+byId("danca").addEventListener("change", () => verificarSelecao("interp", "danca"));
+byId("ordem").addEventListener("change", () => verificarSelecao("interp", "ordem"));
+byId("c_danca").addEventListener("change", async () => {
+    const ok = await verificarSelecao("corr", "danca");
+    renderCorrecao(ok ? byId("c_danca").value : "");
+});
+byId("c_ordem").addEventListener("change", () => verificarSelecao("corr", "ordem"));
+
+byId("h_cod").onchange = () => aoMudarCandidato("harm");
+byId("h_danca").addEventListener("change", async () => {
+    const ok = await verificarSelecao("harm", "danca");
+    renderHarmonia(ok ? byId("h_danca").value : "");
+});
+byId("h_ordem").addEventListener("change", () => verificarSelecao("harm", "ordem"));
+</script>
+</body>
+</html>
